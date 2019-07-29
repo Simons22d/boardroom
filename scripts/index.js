@@ -3,87 +3,35 @@ let display = $("#display");
 let currentPath = $("#currentPath");
 
 
-// calender 
-function calender(path){
-    document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-    plugins: [ 'dayGrid', 'timeGrid', 'list', 'bootstrap','interaction','resourceTimeline'],
-    timeZone: 'UTC',
-    themeSystem: 'bootstrap',
-    selectable : true,
-    height: 550,
-    header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,listMonth,timeGridDay'
-    },
-    eventLimit: true, // allow "more" link when too many events
-    events: path ,
-    customButtons: {
-            addEventButton: {
-            text: 'add event...',
-            click: function() {
-                var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-                var date = new Date(dateStr + 'T00:00:00'); // will be in local time
-    
-                if (!isNaN(date.valueOf())) { // valid?
-                calendar.addEvent({
-                    title: 'dynamic event',
-                    start: date,
-                    allDay: true
-                });
-                alert('Great. Now, update your database...');
-                } else {
-                alert('Invalid date.');
-                }
-            }
-            }
-        },
-    eventClick: function(info) {
-                // alert('Event: ' + info.event.title);
-                // alert('View: ' + info.view.type);
-                // change the border color just for fun
-                info.el.style.borderColor = 'red';
-                // show();
-            },
-    dateClick: function(info) {
-        var startDate = new Date(info.date);
-        show();
-        getDate(startDate);
-    }
-    });
-    calendar.render();
-    });
-}
 // requests
 $("#overview").on("click",(e)=>{
     window.location.href = "index.php";
-})
-$("#one").on("click",(e)=>{
-    display_header.html("Broadroom One");   
-    source = "./one.json";
-    calender(source);
-});
-$("#two").on("click",(e)=>{
-    display_header.html("Broadroom Two");
-    source = "./two.json";
-    calender(source);
-});
-$("#three").on("click",(e)=>{
-    display_header.html("Broadroom Three"); 
-    source = "./three.json";
-    calender(source);
-});
-$("#four").on("click",(e)=>{
-    display_header.html("Broadroom Four");
-    source = "./four.json";
-    calender(source);
 });
 
+// $("#one").on("click",(e)=>{
+//     display_header.html("Broadroom One");   
+//     source = "./one.json";
+//     calender(source);
+// });
 
-            
+// $("#two").on("click",(e)=>{
+//     display_header.html("Broadroom Two");
+//     source = "./two.json";
+//     calender(source);
+// });
+
+// $("#three").on("click",(e)=>{
+//     display_header.html("Broadroom Three"); 
+//     source = "./three.json";
+//     calender(source);
+// });
+
+// $("#four").on("click",(e)=>{
+//     display_header.html("Broadroom Four");
+//     source = "./four.json";
+//     calender(source);
+// });
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -105,7 +53,7 @@ function getDate(thisDate){
     let start = thisDate,
     today = new Date(),
     prevDay,
-    startHours = 9;
+    startHours = 8;
     // 09:00 AM
     start.setHours(9);
     start.setMinutes(0);
@@ -123,14 +71,6 @@ function getDate(thisDate){
         minHours: startHours,
         minDate : today,
         maxHours: 18,
-        customButtons: {
-            custom1: {
-                    text: 'custom 1',
-                    click: function() {
-                    alert('clicked custom button 1!');
-                    }
-                }
-        },
         onSelect: function (fd, d, picker) {
             // Do nothing if selection was cleared
             if (!d) return;
@@ -185,22 +125,19 @@ function getDate(thisDate){
             }
     })
 }
-
 $("#add_event").on("click",(e)=>{
     show();
     getDate(new Date())
 })
-
 $("#book").on("click",()=>{
     let formData = $("#myModal").serialize().split("&");
     let title = unescape(formData[0].split("=")[1]);
     let start = unescape(formData[1].split("=")[1]);
     let end = unescape(formData[2].split("=")[1]);
     let room = unescape(formData[3].split("=")[1]);
-    let roomMap = ["Boardroom One","Boardroom Two","Boardroom Three"]
+    let roomMap = ["","Boardroom One","Boardroom Two","Boardroom Three"]
     console.log(title, ":",start ,"–",end,"[",roomMap[room],"]")
 })
-
 $("#cancel").on("click",()=>{
     modal.style.display = "none";
 })

@@ -310,27 +310,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        eventSources: [
-         {
-             events: function(start, end, timezone, callback) {
-                 $.ajax({
-                 url: './partials/process.php',
-                 dataType: 'json',
-                 data: {
-                 },
-                 success: function(msg) {
-                     var events = msg.events;
-                     callback(events);
-                 }
-                 });
-             }
-         },
-     ],
-     validRange: function(nowDate) {
-            return {
-            start: nowDate
-            };
-        },
+    validRange: function(nowDate) {
+        return {
+        start: nowDate
+        };
+    },
     plugins: [ 'dayGrid', 'timeGrid', 'list', 'bootstrap','interaction','resourceTimeline'],
     timeZone: 'UTC',
     themeSystem: 'bootstrap',
@@ -341,7 +325,12 @@ document.addEventListener('DOMContentLoaded', function() {
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,listMonth,timeGridDay'
     },
-    eventLimit: true, // allow "more" link when too many events
+    eventLimit: true, // allow "more" link when too many events 
+    // events :"./partials/one.json" ,
+    // url:"./partials/process.php",
+    eventSources:[
+        "./partials/process.php"
+    ],
     customButtons: {
             addEventButton: {
             text: 'add event...',
@@ -377,4 +366,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     calendar.render();
     });
+
+
+
+$.ajax({
+    url : "./partials/process.php",
+    method : "POST",
+    data : "hello",
+    success : (data)=>{
+        console.log(data)
+    },
+    error : (a,b,x)=>{
+        console.log(a,b,x)
+    }
+})
 </script>
