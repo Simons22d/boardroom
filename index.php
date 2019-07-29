@@ -4,30 +4,6 @@ error_reporting(0);
 require_once("./partials/header.php");
 ?>
 <head>
-<link href='fullcalendar/packages/core/main.css' rel='stylesheet' />
-    <link href='fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
-    <link rel="stylesheet" href="./fullcalendar/packages/bootstrap/main.css">
-    <link rel="stylesheet" href="./fullcalendar/packages/list/main.css">
-    <link rel="stylesheet" href="./fullcalendar/packages/timegrid/main.css">
-    
-    <!-- bootstrap  and fron awesome -->
-    <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet' />
-    <!-- end  bootstrap nand font awesome -->
-
-    <script src='fullcalendar/packages/core/main.js'></script>
-    <script src='fullcalendar/packages/daygrid/main.js'></script>
-    <script src="fullcalendar/packages/interaction/main.js"></script>
-    <script src="./fullcalendar//packages/bootstrap/main.js"></script>
-    <script src="./fullcalendar/packages/list/main.js"></script>
-    <script src="./fullcalendar/packages/timegrid/main.js"></script>
-    <script src=""></script>
-
-    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 </head>
     <script> 
         // $("#spinner").show();
@@ -334,6 +310,27 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     
     var calendar = new FullCalendar.Calendar(calendarEl, {
+        eventSources: [
+         {
+             events: function(start, end, timezone, callback) {
+                 $.ajax({
+                 url: './partials/process.php',
+                 dataType: 'json',
+                 data: {
+                 },
+                 success: function(msg) {
+                     var events = msg.events;
+                     callback(events);
+                 }
+                 });
+             }
+         },
+     ],
+     validRange: function(nowDate) {
+            return {
+            start: nowDate
+            };
+        },
     plugins: [ 'dayGrid', 'timeGrid', 'list', 'bootstrap','interaction','resourceTimeline'],
     timeZone: 'UTC',
     themeSystem: 'bootstrap',
@@ -345,7 +342,6 @@ document.addEventListener('DOMContentLoaded', function() {
         right: 'dayGridMonth,timeGridWeek,listMonth,timeGridDay'
     },
     eventLimit: true, // allow "more" link when too many events
-    events:"./one.json" ,
     customButtons: {
             addEventButton: {
             text: 'add event...',
