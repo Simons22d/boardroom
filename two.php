@@ -163,7 +163,7 @@ require_once("./partials/header.php");
     #event_btn{
         border-radius: 20px;
         font-size: 14px;
-        border:2px solid #28a745;
+        border:2px solid #5CB85C;
         padding: 8px 30px 8px 30px;
     }
     .links{
@@ -216,6 +216,7 @@ require_once("./partials/header.php");
             <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         </div>
+        
     </div>
 </div>
     </div><!--
@@ -229,7 +230,7 @@ require_once("./partials/header.php");
                 <!-- <div class="col-lg-5" style=""><input class="form-control "  type="search" id="search"  placeholder="Search" aria-label="Search"></div>
                 <div class="col-lg-1" id="spinner"><span class="spinner spinner-bounce-middle"></span></div> -->
             </div>
-			<h5 id="section">Boardroom One</h5>
+			<h5 id="section">Boardroom Two</h5>
                 <br>
                 <form id="myModal" class="modal">
                     <div class="modal-content">
@@ -266,6 +267,20 @@ require_once("./partials/header.php");
                 </div>
                 
                 <br>
+                <!-- <div class="form-group occurence">
+                    <label for="">Repeats</label><br>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-info active">
+                            <input type="radio" name="options" id="daily" autocomplete="off" value="1"> Daily
+                        </label>
+                        <label class="btn btn-outline-info">
+                            <input type="radio" name="options" id="weekly" autocomplete="off" value="2" checked> Weekly
+                        </label>
+                        <label class="btn btn-outline-info">
+                            <input type="radio" name="options" id="monthly" autocomplete="off" value="3"> Monthly
+                        </label>
+                    </div>
+                </div> -->
 
                 <br>
                 <button class="btn btn-warning   col-lg-2 " type="button" id="cancel">Cancel</button>
@@ -275,96 +290,8 @@ require_once("./partials/header.php");
                 </div>
                 
 				<div id="display" >
-                    <!-- jumbtron -->
-                <!-- <div class="jumbotron">
-                        <h1 class="display-4">Boordroom Summary</h1>
-                        <p class="lead">Summary of the current status of each boardroom.</p>
-                </div> -->
-                <style>
-                .boardroom_card{
-                    font-family:"Muli";
-                    font-size : "inhert";
-                    height : 230px;
-                    display: block;
-                    margin-right:3%;
-                    width : 45%;
-                    /* border: 3px solid #007bff; */
-                    background-color : #eee;
-                    border-radius: 10px;
-                    padding-left :35px;
-                    padding-top : 35px;
-                    padding-right : 35px;
-                    padding-bottom : 20px;
-                    transition: background-color .2s ease-in-out;
-                }
-                
-                .header {
-                    color: #007bff;
-                    font-family: "Muli"
-                }
-                .extra{
-                    font-size:20px;
-                    color:red;
-                }
-                .event{
-                    color: #007bff;
-                }
-                .info{
-                    margin-top: -10px;
-                }
-                /* hover state */
-                .boardroom_card:hover{
-                    background-color: #ededde;
-                    transition: background-color .2s ease-in-out;
-                }
-                .far {
-                    font-size : 13px;
-                }
-                .time{
-                    font-family: "Menlo"
-                }
-                .empty{
-                    height: 200px;
-                    background-color: #ededde; 
-                }
-                #btn_book{
-                    width:50%;
-                }
-                .open{
-                    color: #28a745;
-                }
-                </style>
-                <!-- end jumbotron -->
-                <div class=" container row">
-                    <div class="boardroom_card">
-                        <h5 class="header">Boardroom One <span class="extra">•</span><br><span class="status small text-muted">In Progress </span></h5>
-                        <p class="event"> Sample Info from the event Description. Should Not be too long. </p>
-
-                        
-                        <p class="time">11:30AM — 12:30PM </p>
-                        <p class="info"><i class="far fa-clock"></i> &nbsp; Ends In 1 Hour 20 Minutes. </p>
-                    </div>
-                    <!-- card 2 -->
-                    <div class="boardroom_card">
-                        <h5 class="header">Boardroom Two <span class="extra">•</span><br><span class="status small text-muted">In Progress </span></h5>
-                        <p class="event"> Sample Info from the event Description. Should Not be too long. </p>
-
-                        
-                        <p class="time">11:30AM — 12:30PM </p>
-                        <p class="info"><i class="far fa-clock"></i> &nbsp; Ends In 1 Hour 20 Minutes. </p>
-                    </div>
-                    <!-- <div class="boardroom_card"></div> -->
-                </div>
-
-                <div class="container row mt-5">
-                    <div class="boardroom_card empty">
-                        <h5 class="header open">Boardroom Three <span class="extra open">•</span><br><span class="status small text-muted">Empty</span></h5>
-                        <p class="event"></p>
-                        <!-- <p class="time">11:30AM — 12:30PM </p> -->
-                        <p class="info"><i class="far fa-clock"></i> &nbsp; Available Till 3PM. </p>
-                        <span class="btn btn-secondary btn-sm" id="btn_book">Book This Space</span>
-                    </div>
-                </div>
+                    <div class=''id='calendar'></div>
+				</div>
 		</div>
     </div>
 	</div>
