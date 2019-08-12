@@ -2,49 +2,6 @@ let display_header = $("#section");
 let display = $("#display");
 let currentPath = $("#currentPath");
 var calender;
-// adding the calender 
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    // calender_start
-    calender = new FullCalendar.Calendar(calendarEl, {
-        validRange: function(nowDate) {
-            return {
-            start: nowDate
-            };
-        },
-    plugins: [ 'dayGrid', 'timeGrid', 'list', 'bootstrap','interaction','resourceTimeline'],
-    timeZone: 'UTC',
-    themeSystem: 'bootstrap',
-    selectable : true,
-    height: 550,
-    header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,listMonth,timeGridDay'
-    },
-    eventLimit: true, // allow "more" link when too many events 
-    events :"load.php" ,
-    select : ()=>{
-        // show();
-        // getDate(startDate)
-    },
-    eventClick: function(info) {
-                // alert('Event: ' + info.event.title);
-                // alert('View: ' + info.view.type);
-                // change the border color just for fun
-                // info.el.style.borderColor = 'red';
-                // show();
-            },
-    dateClick: function(info) {
-        var startDate = new Date(info.date);
-        show();
-        getDate(startDate)
-    }
-    });
-    // calender end
-    calender.render();
-});
-// end calender
 // requests
 $("#overview").on("click",(e)=>{
     window.location.href = "index.php";
@@ -69,7 +26,7 @@ var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
 
 // // When the user clicks on the button, open the modal
-function show() {
+function show(context) {
     modal.style.display = "block";
 }
 // // When the user clicks on <span> (x), close the modal
@@ -122,7 +79,6 @@ function getDate(thisDate){
             }
         }
     });
-
     $('#endDate').datepicker({
         timepicker: true,
         language: 'en',
@@ -154,11 +110,25 @@ function getDate(thisDate){
             }
     })
 }
+
 // button clcik event [capture]
 $("#add_event").on("click",(e)=>{
     show();
     getDate(new Date())
 })
+
+function getContext(){
+    return sessionStorage.getItem("context");
+}
+function setContext(context){
+    sessionStorage.setItem("context",context);
+}
+function setEventId(id){
+    sessionStorage.setItem("eventId",id);
+}
+function getEventId(){
+    return sessionStorage.getItem("eventId");
+}
 
 // modal book button
 $("#book").on("click",()=>{
@@ -173,16 +143,36 @@ $("#book").on("click",()=>{
         var parsed_end = new Date(end);
         let finalStart = moment(parsed_start).format('YYYY-MM-DD HH:mm:ss');
         let finalEnd = moment(parsed_end).format('YYYY-MM-DD HH:mm:ss');
-        $.ajax({
-        url:"./insert.php",
-        type:"POST",
-        data:{title:title, start:finalStart, end:finalEnd},
-        success:function(){
-            calender.refetchEvents();
-            $("#cancel").trigger("click");
-            console.log("Added Successfully");
+        if(getContext()){
+            let context = getContext();
+            console.log(context);
+            if(context === "new"){
+                console.log("new");
+                $.ajax({
+                    url:"http://localhost:4000/bookings",
+                    type:"POST",
+                    data:{ boardroom_id : room, event:title, start:finalStart, end:finalEnd},
+                    success:function(){
+                        calender.refetchEvents();
+                        $("#cancel").trigger("click");
+                        console.log("Added Successfully");
+                    }
+                })
+            }else if( context === "update"){
+                console.log("update");
+                let id = getEventId();
+                $.ajax({
+                    url:"http://localhost:4000/bookings",
+                    type:"PUT",
+                    data:{ booking_id : id, boardroom_id : room, event:title, start:finalStart, end:finalEnd},
+                    success:function(){
+                        calender.refetchEvents();
+                        $("#cancel").trigger("click");
+                        console.log("Added Successfully");
+                    }
+                })
+            }
         }
-        })
     }
 })
 // cancel button modal
@@ -194,5 +184,34 @@ function makeCalender(name){
     console.log(name);
 }
 
-// function reload
+// function to update modal
+function update(title='',start='',end='',room){
+    $("#title").val(title);
+    $("#startText").html("Booked  : "+start);
+    $("#endText").html("Booked  : "+end);
+    $(".brm_modal").removeAttr("selected");
+    $("#boardroom option").each(function(i){
+        if(Number($(this).val()) === Number(room)){
+            $(this).attr("selected",true);
+        }
+    });
+}
+$("#delete").on("click",()=>{
+    if(getEventId()){
+        $.ajax({
+        url : "http://localhost:4000/bookings/"+getEventId(),
+        method : "DELETE",
+        success : (data)=>{
+            if(data){
+                calender.refetchEvents();
+                $("#cancel").trigger("click");
+            }else{
+                $("#cancel").trigger("click");                
+            }
+        }
+    });
+    }else{
+        $("#cancel").trigger("click");
+    }
+})
 

@@ -10,166 +10,6 @@ require_once("./partials/header.php");
         $("#data").hide();
         $("#buttons").hide();
     </script>
-    <style>
-        #location{
-            color : #09f;
-        }
-        .wrapper_div{
-            background: #fcfcfc;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2000;
-        }
-        .loader,
-        .loader:after {
-            border-radius: 50%;
-            width: 10em;
-            height: 10em;
-        }
-        .loader {
-            margin: 60px auto;
-            font-size: 10px;
-            position: relative;
-            text-indent: -9999em;
-            border-top: 1.1em solid rgba(0,116,255, 0.2);
-            border-right: 1.1em solid rgba(0,116,255, 0.2);
-            border-bottom: 1.1em solid rgba(0,116,255, 0.2);
-            border-left: 1.1em solid #0074ff;
-            -webkit-transform: translateZ(0);
-            -ms-transform: translateZ(0);
-            transform: translateZ(0);
-            -webkit-animation: load8 1.1s infinite linear;
-            animation: load8 1.1s infinite linear;
-        }
-        @-webkit-keyframes load8 {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-        @keyframes load8 {
-            0% {
-                -webkit-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-        .space{
-            padding-top:200px;
-        }
-        #spinner{
-            margin-top :10px;
-        }
-        #beta{
-            font-size:10px;
-            background-color: #09f;
-            color : #fff;
-            padding : 2px 5px;
-            border-radius :5px;
-        }
-        #username{
-            font-size : 12px;
-            margin-bottom : 15px;
-            color : #fff;
-            font-weight : 900;
-            background-color: #fe5363;
-            padding : 4px 10px 5px 15px;
-            width : 75%;
-            border-radius : 15px;
-            letter-spacing: .5px;
-        }
-        .progress{
-            height : 4px;
-            width: 150px;
-        }
-        .room{
-            padding-left:20px;
-            padding-top:8px;
-            padding-bottom: 12px;
-            border-radius:5px
-        }
-        .room:hover{
-            background-color:#ceceff;
-        }
-        .link{
-            padding-left:20px;
-            padding-top:1px;    
-            padding-bottom : 1px;
-            font-size: 16px;
-        }
-        .links{
-            color : #999;
-        }
-    </style>
-    <style>
-        /* The Modal (background) */
-    .modal {
-    display: none; /* Hidden by default */
-    position: fixed;
-    z-index: 2; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    overflow: auto; /*Enable scroll if needed*/
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.2); /* Black w/ opacity */
-    }
-
-    /* Modal Content/Box */
-    .modal-content {
-    background-color: #fefefe;
-    margin: 2% auto; /* 15% from the top and centered */
-
-    padding: 20px;
-    padding-left:120px;
-    border: 1px solid #888;
-    width: 60%; /* Could be more or less, depending on screen size */
-    padding-bottom:40px
-    }
-
-    /* The Close Button */
-    .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-    }
-    .pop{
-        padding-left :100px;
-    }
-    #calendar{
-        margin-right:80px;
-    }
-    #add_event{
-        padding-left:20px;
-    }
-    #event_btn{
-        border-radius: 20px;
-        font-size: 14px;
-        border:2px solid #28a745;
-        padding: 8px 30px 8px 30px;
-    }
-    .links{
-        padding-bottom:3px;
-    }
-    </style>
 <body>
 
 <div id="container">
@@ -190,7 +30,7 @@ require_once("./partials/header.php");
             <div class=" link option" id="home">Home</div>
         </div>
         <div class="">
-        <div class=" link option clicked" id="overview">Overview</div>
+        <div class="link option" style="color:#007bff" id="overview">Overview</div>
         </div>
         
 
@@ -235,7 +75,7 @@ require_once("./partials/header.php");
                     <div class="modal-content">
                         <span class="close" style="text-align:right">&times;</span>                  
                         <div id="pop" class="col-lg-12">
-                            <h5>Book A Room</h5>
+                            <h5  id="action">Book A Room</h5>
                             <br>
                         <div class="row">
                         <div class="col-lg-10">
@@ -258,9 +98,9 @@ require_once("./partials/header.php");
                 <div class="form-group">
                     <label for="employees">Boardroom <small  class="help_info form-text text-muted">The Boardroom You would like to book.</small></label>
                     <select class="form-control col-lg-9" id="boardroom"  name="boardroom">
-                        <option value="null" selected>Select Boardroom</option>
+                        <option value="null">Select Boardroom</option>
                         <option value="1" >Boardroom One</option>
-                        <option value="2" >Boardroom Two</option>
+                        <option value="2" selected >Boardroom Two</option>
                         <option value="3" >Boardroom Three</option>
                     </select>
                 </div>
@@ -281,66 +121,13 @@ require_once("./partials/header.php");
                         <p class="lead">Summary of the current status of each boardroom.</p>
                 </div> -->
                 <style>
-                .boardroom_card{
-                    font-family:"Muli";
-                    font-size : "inhert";
-                    height : 230px;
-                    display: block;
-                    margin-right:3%;
-                    width : 45%;
-                    /* border: 3px solid #007bff; */
-                    background-color : #eee;
-                    border-radius: 10px;
-                    padding-left :35px;
-                    padding-top : 35px;
-                    padding-right : 35px;
-                    padding-bottom : 20px;
-                    transition: background-color .2s ease-in-out;
-                }
                 
-                .header {
-                    color: #007bff;
-                    font-family: "Muli"
-                }
-                .extra{
-                    font-size:20px;
-                    color:red;
-                }
-                .event{
-                    color: #007bff;
-                }
-                .info{
-                    margin-top: -10px;
-                }
-                /* hover state */
-                .boardroom_card:hover{
-                    background-color: #ededde;
-                    transition: background-color .2s ease-in-out;
-                }
-                .far {
-                    font-size : 13px;
-                }
-                .time{
-                    font-family: "Menlo"
-                }
-                .empty{
-                    height: 200px;
-                    background-color: #ededde; 
-                }
-                #btn_book{
-                    width:50%;
-                }
-                .open{
-                    color: #28a745;
-                }
                 </style>
                 <!-- end jumbotron -->
                 <div class=" container row">
                     <div class="boardroom_card">
                         <h5 class="header">Boardroom One <span class="extra">•</span><br><span class="status small text-muted">In Progress </span></h5>
                         <p class="event"> Sample Info from the event Description. Should Not be too long. </p>
-
-                        
                         <p class="time">11:30AM — 12:30PM </p>
                         <p class="info"><i class="far fa-clock"></i> &nbsp; Ends In 1 Hour 20 Minutes. </p>
                     </div>
@@ -348,8 +135,6 @@ require_once("./partials/header.php");
                     <div class="boardroom_card">
                         <h5 class="header">Boardroom Two <span class="extra">•</span><br><span class="status small text-muted">In Progress </span></h5>
                         <p class="event"> Sample Info from the event Description. Should Not be too long. </p>
-
-                        
                         <p class="time">11:30AM — 12:30PM </p>
                         <p class="info"><i class="far fa-clock"></i> &nbsp; Ends In 1 Hour 20 Minutes. </p>
                     </div>
@@ -358,7 +143,7 @@ require_once("./partials/header.php");
 
                 <div class="container row mt-5">
                     <div class="boardroom_card empty">
-                        <h5 class="header open">Boardroom Three <span class="extra open">•</span><br><span class="status small text-muted">Empty</span></h5>
+                        <h5 class="header open">Boardroom Three <span class="extra open">•</span><br><span class="status small text-muted">Not Occupied</span></h5>
                         <p class="event"></p>
                         <!-- <p class="time">11:30AM — 12:30PM </p> -->
                         <p class="info"><i class="far fa-clock"></i> &nbsp; Available Till 3PM. </p>
