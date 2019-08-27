@@ -1,0 +1,20 @@
+# overview 
+endpoint that returns:
+_boardroom id 
+_status
+_next event
+_current event title
+... after i pass the time and the event/booking id
+
+
+// ---
+
+Endpoint: Get event details
+Params: boardoomid:Number, currentEvent:Date | null, nextEvent:Date
+Consume: -
+Type: Get
+Produce: { 
+    boardoomid : Number,
+    currentEvent : Date | null ,
+    nextEvent : Date
+ }  

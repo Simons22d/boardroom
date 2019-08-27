@@ -498,7 +498,7 @@ padding: 8px 30px 8px 30px;
     padding-top : 35px;
     padding-right : 35px;
     padding-bottom : 20px;
-    transition: background-color .7s ease-in-out;
+    transition: background-color .4s ease-in-out;
 }
 
 .header {
@@ -518,7 +518,7 @@ padding: 8px 30px 8px 30px;
 /* hover state */
 .boardroom_card:hover{
     background-color: #eee;
-    transition: background-color .2s ease-in-out;
+    transition: background-color .4s ease-in-out;
 }
 .far {
     font-size : 13px;

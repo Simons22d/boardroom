@@ -64,8 +64,15 @@ require_once("./partials/header.php");
 			<div id="space"></div><br>
 			<div class="row col-lg-12">
                 <div class="col-lg-6" style="margin-left:-15px"><h5 id="theDisplay">Boardroom Booking System</h5></div>
-                <!-- <div class="col-lg-5" style=""><input class="form-control "  type="search" id="search"  placeholder="Search" aria-label="Search"></div>
-                <div class="col-lg-1" id="spinner"><span class="spinner spinner-bounce-middle"></span></div> -->
+                <div class=" col-lg-6" style="">
+                    <!-- <input class="form-control "  type="search" id="search"  placeholder="Search" aria-label="Search"> -->
+                    <div class="alert alert-success alert-dismissible fade show" id="successFlash" role="alert" style="display:none">
+                    <strong>Success!</strong> Event saved to calender.
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade show" id="deleteFlash" role="alert" style="display:none">
+                    <strong>Deleted!</strong> Event Removed From Calender.
+                    </div>
+                </div>
             </div>
 			<h5 id="section">Boardroom One</h5>
                 <br>
@@ -87,11 +94,11 @@ require_once("./partials/header.php");
                 <div class="row">
                     <div class="col-lg-5">
                         <label for="datePickerStart">Start Date<small  class="help_info form-text text-muted" id="startText">When The Event Begins</small></label>
-                        <input  type="text" class="form-control" id="startDate" name="datePackerOne">
+                        <input   type="text" class="form-control" id="startDate" name="datePackerOne">
                     </div>
                     <div class="col-lg-5" id="endDateDiv">
                         <label for="datePickerStart">End Date<small  class="help_info form-text text-muted" id="endText" >When The Event Ends</small></label>
-                        <input  type="text" class="form-control" id="endDate" name="datePickerTwo">
+                        <input   type="text" class="form-control" id="endDate" name="datePickerTwo">
                     </div>
                 </div>
                 <br>
@@ -99,7 +106,7 @@ require_once("./partials/header.php");
                     <label for="employees">Boardroom <small  class="help_info form-text text-muted">The Boardroom You would like to book.</small></label>
                     <select class="form-control col-lg-9" id="boardroom"  name="boardroom">
                         <option value="null" class='brm_modal' >Select Boardroom</option>
-                        <option value="1" class='brm_modal'>Boardroom One</option>
+                        <option value="1" class='brm_modal' selected>Boardroom One</option>
                         <option value="3" class='brm_modal' >Boardroom Two</option>
                         <option value="4" class='brm_modal'>Boardroom Three</option>
                     </select>
@@ -148,11 +155,12 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     eventClick: function(info) {
                 // show(); //show the modal with the following values
-                console.log("event click");
+                console.log("event click"); 
                 // get the id 
                 eventId = info.event.id;
                 start = moment(info.event.start).format('YYYY-MM-DD HH:mm:ss');
                 end = moment(info.event.end).format("YYYY-MM-DD HH:mm:ss");
+
                 title = info.event.title;
                 setContext("update");
                 setEventId(eventId);
@@ -164,15 +172,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     method : "GET",
                     success : (data)=>{
                         console.log(data)
-                        update(data.event,start,end,data.boardroomId);
+                        update(data.title,start,end,data.boardroomId);
                     }
                 })
-                
-                // llopginto update the 
+                // looping into update the 
                 show();
                 getDate(new Date());
             },
     dateClick: function(info) {
+        // let sDate = info.dateStr()
+        // console.log(sDate);
+        // FORMAT : 08/14/2019 09:00 am
+
+        // $("#startDate").val(moment(info.date).format("YYYY-MM-DD HH:mm:ss"));
         var startDate = new Date(info.date);
         show();
         setContext("new");

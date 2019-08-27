@@ -64,8 +64,15 @@ require_once("./partials/header.php");
 			<div id="space"></div><br>
 			<div class="row col-lg-12">
                 <div class="col-lg-6" style="margin-left:-15px"><h5 id="theDisplay">Boardroom Booking System</h5></div>
-                <!-- <div class="col-lg-5" style=""><input class="form-control "  type="search" id="search"  placeholder="Search" aria-label="Search"></div>
-                <div class="col-lg-1" id="spinner"><span class="spinner spinner-bounce-middle"></span></div> -->
+                <div class=" col-lg-6" style="">
+                    <!-- <input class="form-control "  type="search" id="search"  placeholder="Search" aria-label="Search"> -->
+                    <div class="alert alert-success alert-dismissible fade show" id="successFlash" role="alert" style="display:none">
+                    <strong>Success!</strong> Event saved to calender.
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade show" id="deleteFlash" role="alert" style="display:none">
+                    <strong>Deleted!</strong> Event Removed From Calender.
+                    </div>
+                </div>
             </div>
 			<h5 id="section">Boardroom One</h5>
                 <br>
@@ -100,7 +107,7 @@ require_once("./partials/header.php");
                     <select class="form-control col-lg-9" id="boardroom"  name="boardroom">
                         <option value="null" class='brm_modal' >Select Boardroom</option>
                         <option value="1" class='brm_modal'>Boardroom One</option>
-                        <option value="3" class='brm_modal' >Boardroom Two</option>
+                        <option value="3" class='brm_modal' selected>Boardroom Two</option>
                         <option value="4" class='brm_modal'>Boardroom Three</option>
                     </select>
                 </div>
@@ -141,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
         right: 'dayGridMonth,timeGridWeek,listMonth,timeGridDay'
     },
     eventLimit: true, // allow "more" link when too many events 
-    events :"http://localhost:4000/bookings/" ,
+    events :"http://localhost:4000/bookings/boardroom/3" ,
     select : ()=>{
         // show();
         // getDate(startDate)
@@ -164,11 +171,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     method : "GET",
                     success : (data)=>{
                         console.log(data)
-                        update(data.event,start,end,data.boardroomId);
+                        update(data.title,start,end,data.boardroomId);
                     }
                 })
                 
-                // llopginto update the 
+                // looping into update the 
                 show();
                 getDate(new Date());
             },
@@ -176,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var startDate = new Date(info.date);
         show();
         setContext("new");
-        console.log(getContext());
+        getContext();
         getDate(startDate)
         $("#delete").hide();
         $("#cancel").show();

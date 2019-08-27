@@ -32,8 +32,6 @@ require_once("./partials/header.php");
         <div class="">
         <div class="link option" style="color:#007bff" id="overview">Overview</div>
         </div>
-        
-
 	<p id="space"></p>
 	<p class="header link sidebar_items"> Rooms & Status </p>
 	<div class="sidebar_items items sidebar">
@@ -99,9 +97,9 @@ require_once("./partials/header.php");
                     <label for="employees">Boardroom <small  class="help_info form-text text-muted">The Boardroom You would like to book.</small></label>
                     <select class="form-control col-lg-9" id="boardroom"  name="boardroom">
                         <option value="null">Select Boardroom</option>
-                        <option value="1" >Boardroom One</option>
-                        <option value="2" selected >Boardroom Two</option>
-                        <option value="3" >Boardroom Three</option>
+                        <option value="1" id="one" class="room" >Boardroom One</option>
+                        <option value="2" id="two" class="room" >Boardroom Two</option>
+                        <option value="3" id="three" class="room" >Boardroom Three</option>
                     </select>
                 </div>
                 
@@ -154,7 +152,6 @@ require_once("./partials/header.php");
     </div>
 	</div>
 </div>
-
 <?php
 require_once("./partials/footer.php");
 ?>

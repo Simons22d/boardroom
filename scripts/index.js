@@ -32,6 +32,12 @@ function show(context) {
 // // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
+    cleanFields()
+}
+function cleanFields(){
+    $("#startDate").val("");
+    $("#endDate").val("");
+    $("#title").val("");
 }
 // end modal
 function getDate(thisDate){
@@ -93,7 +99,6 @@ function getDate(thisDate){
             // Trigger only if date is changed
             if (prevDay != undefined && prevDay == day) return;
             prevDay = day;
-
             // If chosen day is Saturday or Sunday when set
             // hour value for weekends, else restore defaults
             if (day == 6 || day == 0) {
@@ -110,9 +115,9 @@ function getDate(thisDate){
             }
     })
 }
-
-// button clcik event [capture]
+// button click event [capture]
 $("#add_event").on("click",(e)=>{
+    $("#delete").hide();
     show();
     getDate(new Date())
 })
@@ -151,11 +156,15 @@ $("#book").on("click",()=>{
                 $.ajax({
                     url:"http://localhost:4000/bookings",
                     type:"POST",
-                    data:{ boardroom_id : room, event:title, start:finalStart, end:finalEnd},
+                    data:{ boardroom_id : room, title:title, start:finalStart, end:finalEnd},
                     success:function(){
                         calender.refetchEvents();
                         $("#cancel").trigger("click");
-                        console.log("Added Successfully");
+                        $("#successFlash").show();
+                        setTimeout(()=>{
+                            $("#successFlash").hide();
+                            $("#deleteFlash").hide();
+                        },3000);
                     }
                 })
             }else if( context === "update"){
@@ -164,11 +173,15 @@ $("#book").on("click",()=>{
                 $.ajax({
                     url:"http://localhost:4000/bookings",
                     type:"PUT",
-                    data:{ booking_id : id, boardroom_id : room, event:title, start:finalStart, end:finalEnd},
+                    data:{ booking_id : id, boardroom_id : room, title:title, start:finalStart, end:finalEnd},
                     success:function(){
                         calender.refetchEvents();
                         $("#cancel").trigger("click");
-                        console.log("Added Successfully");
+                        $("#successFlash").show();
+                        setTimeout(()=>{
+                            $("#successFlash").hide();
+                            $("#deleteFlash").hide();
+                        },3000);
                     }
                 })
             }
@@ -178,11 +191,8 @@ $("#book").on("click",()=>{
 // cancel button modal
 $("#cancel").on("click",()=>{
     modal.style.display = "none";
+    cleanFields();
 })
-
-function makeCalender(name){
-    console.log(name);
-}
 
 // function to update modal
 function update(title='',start='',end='',room){
@@ -204,6 +214,11 @@ $("#delete").on("click",()=>{
         success : (data)=>{
             if(data){
                 calender.refetchEvents();
+                $("#deleteFlash").show();
+                setTimeout(()=>{    
+                    $("#successFlash").hide();
+                    $("#deleteFlash").hide();
+                },3000);
                 $("#cancel").trigger("click");
             }else{
                 $("#cancel").trigger("click");                
@@ -215,3 +230,50 @@ $("#delete").on("click",()=>{
     }
 })
 
+
+$("#btn_book").on("click",()=>{
+    // locate to the boardroom 3 
+    // trigger modal to add event 
+    show();
+    // setContext("new");
+    // we shal time to funciton which we shall the work with later
+    //  we are also going to restict the time to th one only the one available
+    // as a range but not exceeiding the slot
+    // this will be the dat the date that has been passed from the back end
+    var startDate = new Date();
+    getDate(startDate)
+    $("#delete").hide();
+    // $("#cancel").show();
+    // $(".room").attr("selected",false);
+    // $("#three").prop("selected",true)
+    update("Event Name","08/21/2019 09:34 am","08/21/2019 11:34 am",3) 
+    // later we should add the time limits to resrict to some give times
+    // we would bee a funciton that takes the rescriicted times   
+})
+
+/**
+ * 
+ * @param {string} widgeName 
+ * @returns {JSON}
+ * 
+ */
+
+function refreshWidget(widgetName){
+    let msg = $(`${widgetName}_message`);
+    let status = $(`${widgetName}_status`);
+    let duration = $(`${widgetName}_duration`);
+    let time = $(`${widgetName}_time`)
+    setTimeout(()=>{
+        $.ajax({
+            url : "",
+            method : "",
+            data : "",
+            success : (data)=>{
+                // update data
+            },
+            error : (error)=>{
+                //  revert back to old data
+            }
+        })
+    },1000);
+}
